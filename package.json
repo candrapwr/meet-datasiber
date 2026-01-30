@@ -1,0 +1,14 @@
+{
+  "name": "meet-datasiber",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @meet-datasiber/client & npm run dev -w @meet-datasiber/server",
+    "dev:client": "npm run dev -w @meet-datasiber/client",
+    "dev:server": "npm run dev -w @meet-datasiber/server",
+    "lint": "npm run lint -w @meet-datasiber/client",
+    "build": "npm run build -w @meet-datasiber/client && npm run build -w @meet-datasiber/server"
+  }
+}

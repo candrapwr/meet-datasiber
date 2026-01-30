@@ -1,0 +1,354 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+:root {
+  --bg-1: #0a0d12;
+  --bg-2: #0f131b;
+  --bg-3: #151a24;
+  --accent: #3dd6c0;
+  --accent-2: #8aa5ff;
+  --card: rgba(255, 255, 255, 0.04);
+  --card-strong: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.08);
+  --text: #f2f5f8;
+  --muted: rgba(242, 245, 248, 0.65);
+  --danger: #ff6b6b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Space Grotesk", "IBM Plex Sans", system-ui, sans-serif;
+  color: var(--text);
+  background: radial-gradient(900px 700px at 80% -10%, #1c2a40 0%, transparent 60%),
+    radial-gradient(900px 500px at 0% 0%, #1a1426 0%, transparent 60%),
+    linear-gradient(160deg, var(--bg-1), var(--bg-2) 45%, var(--bg-3) 100%);
+  min-height: 100vh;
+}
+
+main {
+  padding: 24px;
+  height: 100dvh;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 16px;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: linear-gradient(140deg, var(--accent), #4f7cff);
+  box-shadow: 0 12px 30px rgba(41, 211, 166, 0.35);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+  min-height: 0;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+  height: 100%;
+  min-height: 0;
+}
+
+.video-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.video-body {
+  flex: 1;
+  min-height: 0;
+}
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.video-tile {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--border);
+  aspect-ratio: 16 / 10;
+}
+
+.video-tile video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-tile.screen-share video {
+  object-fit: contain;
+  background: #000;
+}
+
+.video-label {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 999px;
+  font-size: 12px;
+}
+
+.sidebar {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 12px;
+  height: 100%;
+  min-height: 0;
+  overflow: auto;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--card-strong);
+  font-size: 12px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding-bottom: 6px;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+}
+
+.btn {
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: var(--card-strong);
+  color: var(--text);
+  border: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent), #4f7cff);
+  color: #0a0a0a;
+  font-weight: 600;
+}
+
+.btn-danger {
+  background: rgba(255, 107, 107, 0.2);
+  color: var(--text);
+  border: 1px solid rgba(255, 107, 107, 0.6);
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text);
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  max-height: 100%;
+  padding-right: 6px;
+}
+
+.chat-item {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.participants-list {
+  display: grid;
+  gap: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.participant-item {
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.chat-panel {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 8px;
+  min-height: 0;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  min-height: 0;
+}
+
+.icon-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.6);
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.stage-layout {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 10px;
+  height: 100%;
+  min-height: 0;
+}
+
+.stage-main {
+  min-width: 0;
+  min-height: 0;
+}
+
+.stage-layout .stage {
+  aspect-ratio: auto;
+  height: 100%;
+  min-height: 0;
+}
+
+.stage-strip {
+  display: grid;
+  grid-auto-rows: minmax(120px, 140px);
+  gap: 10px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.video-tile.mini {
+  aspect-ratio: 16 / 9;
+  height: 100%;
+}
+
+@media (max-width: 980px) {
+  .stage-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .stage-strip {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(160px, 1fr);
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+.notice {
+  padding: 10px 12px;
+  background: rgba(245, 183, 0, 0.15);
+  border-radius: 12px;
+  border: 1px solid rgba(245, 183, 0, 0.6);
+  color: #ffe4a4;
+  font-size: 13px;
+}
+
+.fade-in {
+  animation: none;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 980px) {
+  .room-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    grid-template-rows: auto auto auto;
+  }
+}
+
+@media (max-height: 820px) {
+  main {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .room-grid {
+    gap: 12px;
+  }
+
+  .video-tile {
+    aspect-ratio: 16 / 9;
+  }
+}
