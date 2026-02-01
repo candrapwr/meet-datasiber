@@ -3,7 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
-const SIGNALING_URL = process.env.NEXT_PUBLIC_SIGNALING_URL || "http://localhost:3001";
+const SIGNALING_URL =
+  process.env.NEXT_PUBLIC_SIGNALING_URL ||
+  (typeof window !== "undefined" ? window.location.origin : "");
 const buildIceServers = () => {
   const servers = [];
   const stunUrl = process.env.NEXT_PUBLIC_STUN_URL || "";
