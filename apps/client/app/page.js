@@ -3,9 +3,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
-const SIGNALING_URL =
-  process.env.NEXT_PUBLIC_SIGNALING_URL ||
-  (typeof window !== "undefined" ? window.location.origin : "");
+const resolveSignalingUrl = () => {
+  const envUrl = process.env.NEXT_PUBLIC_SIGNALING_URL;
+  if (envUrl) return envUrl;
+  if (typeof window === "undefined") return "";
+  const origin = window.location.origin;
+  if (origin.includes("localhost:3000")) return "http://localhost:3001";
+  return origin;
+};
+
+const SIGNALING_URL = resolveSignalingUrl();
 const buildIceServers = () => {
   const servers = [];
   const stunUrl = process.env.NEXT_PUBLIC_STUN_URL || "";
@@ -56,6 +63,7 @@ export default function HomePage() {
 
   const localVideoRef = useRef(null);
   const localStreamRef = useRef(null);
+  const lastVideoOffRef = useRef(true);
   const recorderRef = useRef(null);
   const recordedChunksRef = useRef([]);
 
@@ -184,12 +192,15 @@ export default function HomePage() {
     const stream = localStreamRef.current;
     if (!stream) return;
     if (videoOff) {
-      stream.getVideoTracks().forEach((track) => track.stop());
-      stream.getVideoTracks().forEach((track) => stream.removeTrack(track));
+      stream.getVideoTracks().forEach((track) => {
+        track.stop();
+        stream.removeTrack(track);
+      });
       peersRef.current.forEach((pc) => {
         const sender = pc.getSenders().find((s) => s.track && s.track.kind === "video");
         if (sender) sender.replaceTrack(null);
       });
+      peersRef.current.forEach((_, peerId) => createOffer(peerId));
     } else {
       navigator.mediaDevices.getUserMedia({ video: true }).then((camStream) => {
         const camTrack = camStream.getVideoTracks()[0];
@@ -197,10 +208,16 @@ export default function HomePage() {
         if (localVideoRef.current) {
           localVideoRef.current.srcObject = stream;
         }
-        peersRef.current.forEach((pc) => {
+        peersRef.current.forEach((pc, peerId) => {
           const sender = pc.getSenders().find((s) => s.track && s.track.kind === "video");
-          if (sender) sender.replaceTrack(camTrack);
+          if (sender) {
+            sender.replaceTrack(camTrack);
+          } else {
+            pc.addTrack(camTrack, stream);
+            createOffer(peerId);
+          }
         });
+        peersRef.current.forEach((_, peerId) => createOffer(peerId));
       });
     }
   }, [videoOff]);
@@ -350,6 +367,7 @@ export default function HomePage() {
       await stopScreenShare();
       return;
     }
+    lastVideoOffRef.current = videoOff;
     const screenStream = await navigator.mediaDevices.getDisplayMedia({
       video: true,
       audio: false
@@ -362,11 +380,17 @@ export default function HomePage() {
   };
 
   const stopScreenShare = async () => {
-    const camStream = await navigator.mediaDevices.getUserMedia({
-      video: true
-    });
-    const camTrack = camStream.getVideoTracks()[0];
-    replaceVideoTrack(camTrack);
+    if (lastVideoOffRef.current) {
+      setVideoOff(true);
+      replaceVideoTrack(null);
+    } else {
+      const camStream = await navigator.mediaDevices.getUserMedia({
+        video: true
+      });
+      const camTrack = camStream.getVideoTracks()[0];
+      replaceVideoTrack(camTrack);
+      setVideoOff(false);
+    }
     setScreenSharing(false);
     socket.emit("screen-share", { roomId, peerId: socket.id, active: false });
     setActiveStagePeerId((current) => (current === socket.id ? null : current));
@@ -376,15 +400,21 @@ export default function HomePage() {
     const stream = localStreamRef.current;
     if (!stream) return;
     stream.getVideoTracks().forEach((track) => stream.removeTrack(track));
-    stream.addTrack(newTrack);
+    if (newTrack) stream.addTrack(newTrack);
     if (localVideoRef.current) {
       localVideoRef.current.srcObject = stream;
     }
 
-    peersRef.current.forEach((pc) => {
+    peersRef.current.forEach((pc, peerId) => {
       const sender = pc.getSenders().find((s) => s.track && s.track.kind === "video");
-      if (sender) sender.replaceTrack(newTrack);
+      if (sender) {
+        sender.replaceTrack(newTrack);
+      } else if (newTrack) {
+        pc.addTrack(newTrack, stream);
+        createOffer(peerId);
+      }
     });
+    peersRef.current.forEach((_, peerId) => createOffer(peerId));
   };
 
   const toggleRecording = () => {
