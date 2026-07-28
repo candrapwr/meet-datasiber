@@ -1,4 +1,26 @@
-# Meet Datasiber
+<div align="center">
+
+# 🎥 Meet Datasiber
+
+**Aplikasi video meeting WebRTC untuk tim — waiting room, chat, screen share, dan recording lokal.**
+
+Dibangun dengan Next.js + Express + Socket.IO. Struktur modular yang mudah dikembangkan ke fitur enterprise.
+
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![Next.js](https://img.shields.io/badge/Next.js-14-000000?logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Express](https://img.shields.io/badge/Express-signaling-000000?logo=express&logoColor=white)](https://expressjs.com/)
+[![Socket.IO](https://img.shields.io/badge/Socket.IO-realtime-010101?logo=socket.io&logoColor=white)](https://socket.io/)
+[![WebRTC](https://img.shields.io/badge/WebRTC-P2P_mesh-333333?logo=webrtc&logoColor=white)](https://webrtc.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-ready-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#)
+[![Status](https://img.shields.io/badge/status-aktif_maintained-success.svg)](#)
+[![Stars](https://img.shields.io/github/stars/candrapwr/meet-datasiber?style=social&label=Star)](https://github.com/candrapwr/meet-datasiber/stargazers)
+
+</div>
+
+---
+
+> 🌐 Bagian dari **Ekosistem Siber** — dibangun & dirawat oleh **dataSiberLab**.
 
 Meet Datasiber adalah aplikasi video meeting berbasis WebRTC untuk tim: waiting room, chat, screen share, dan recording lokal. Proyek ini dibuat supaya mudah dikembangkan ke fitur enterprise ke depan.
 
@@ -138,3 +160,24 @@ npm run start -w @meet-datasiber/client
 - Admin dashboard
 - Integrasi auth (JWT/SSO)
 - Moderasi host (mute/kick)
+
+---
+
+## 📄 Lisensi
+
+Dirilis di bawah **Lisensi MIT**. Lihat [LICENSE](./LICENSE). Bebas dipakai, dimodifikasi, dan didistribusikan — termasuk komersial.
+
+---
+
+## 📬 Kontak & Komunitas
+
+<div align="center">
+
+**Dibuat dengan ❤️ oleh [dataSiberLab](https://datasiber.com)** sebagai bagian dari ekosistem Siber.
+
+📧 **Kontak:** [candrapwr@datasiber.com](mailto:candrapwr@datasiber.com)
+🌐 **Website:** [datasiber.com](https://datasiber.com)
+
+Meet Datasiber berguna? ⭐ Star repo-nya!
+
+</div>
